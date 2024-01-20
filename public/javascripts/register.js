@@ -20,12 +20,18 @@ registerForm.addEventListener("submit", (event) => {
     },
     body: JSON.stringify(data),
   })
-    .then((response) => response.json())
-    .then((result) => {
-      // Handle the response
-      console.log(result);
-      // Redirect to "/login.html"
-      window.location.href = "/login.html";
+    .then((response) => {
+      if (response.ok) {
+        // Registration successful
+        console.log("Registration successful");
+        // Redirect to "/login.html"
+        window.location.href = "/login.html";
+      } else {
+        // Registration failed
+        response.json().then((data) => {
+          console.error(data.message);
+        });
+      }
     })
     .catch((error) => {
       console.error("Error:", error);
